@@ -6,7 +6,22 @@ const Button = ({handleClick, text}) => (
   </button> 
 )
 
+const Statistics = ({feedback, stats}) => {
+  return (
+    <div>
+      <h1>Statistics</h1>
+      Good: {feedback.good}<br/>
+      Neutral: {feedback.neutral}<br/>
+      Bad: {feedback.bad}<br/>
+      All: {stats.all}<br/>
+      Average: {stats.average}<br/>
+      Positive: {stats.positive}<br/>
+    </div>
+  )
+}
+
 const App = () => {
+
   const [feedback, setFeedback] = useState({
     good: 0,
     neutral: 0,
@@ -19,12 +34,12 @@ const App = () => {
     positive: 0
   })
 
-  const calculateStats = (fb) => {
-    const totalFeedback = fb.good + fb.neutral + fb.bad
+  const handleStats = (fb) => {
+    const total = fb.good + fb.neutral + fb.bad
     const updateStats = {
-      all: totalFeedback,
-      average: parseFloat((fb.good - fb.bad) / totalFeedback).toPrecision(2),
-      positive: parseFloat(fb.good / totalFeedback).toPrecision(2)
+      all: total,
+      average: parseFloat((fb.good - fb.bad) / total).toPrecision(2),
+      positive: parseFloat(fb.good / total).toPrecision(2)
     }
     setStats(updateStats)
   }
@@ -35,7 +50,7 @@ const App = () => {
       good: feedback.good + 1
     }
     setFeedback(updateFeedback)
-    calculateStats(updateFeedback)
+    handleStats(updateFeedback)
   }
 
   const handleNeutral = () => {
@@ -44,7 +59,7 @@ const App = () => {
       neutral: feedback.neutral + 1
     }
     setFeedback(updateFeedback)
-    calculateStats(updateFeedback)
+    handleStats(updateFeedback)
   }
 
   const handleBad = () => {
@@ -53,10 +68,8 @@ const App = () => {
       bad: feedback.bad + 1
     }
     setFeedback(updateFeedback)
-    calculateStats(updateFeedback)
+    handleStats(updateFeedback)
   }
-
-
 
   return(
     <div>
@@ -64,13 +77,7 @@ const App = () => {
       <Button handleClick={handleGood} text='Good!'/>
       <Button handleClick={handleNeutral} text='Neutral'/>
       <Button handleClick={handleBad} text='Bad'/>
-      <h1>Statistics</h1>
-      Good: {feedback.good}<br/>
-      Neutral: {feedback.neutral}<br/>
-      Bad: {feedback.bad}<br/>
-      All: {stats.all}<br/>
-      Average: {stats.average}<br/>
-      Positive: {stats.positive}<br/>
+      <Statistics feedback={feedback} stats={stats}/>
     </div>  
   )
 }
