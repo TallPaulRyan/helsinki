@@ -11,6 +11,25 @@ const Button = ({handleClick,text}) => {
   )
 }
 
+const Anecdote = ({rating, maxRatingIndex, anecdotes}) => {
+  if(rating[maxRatingIndex] === 0){
+    return(
+      <>
+        <h1>Anecdote with the most votes!</h1>
+        There are currently no votes.<br/>
+      </>
+    )
+  } else {
+    return(
+      <>
+        <h1>Anecdote with the most votes!</h1>
+        {anecdotes[maxRatingIndex]}<br/>
+        Has {rating[maxRatingIndex]} votes!
+      </>
+    )
+  }
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often',
@@ -50,8 +69,7 @@ const App = () => {
       Rating: {rating[selected]}<br/>
       <Button handleClick={handleRating} text='vote'/>
       <Button handleClick={handleRandom} text='randomize'/><br/>
-      <h1>Anecdote with the most votes</h1>
-      {anecdotes[maxRatingIndex]}
+      <Anecdote rating={rating} maxRatingIndex={maxRatingIndex} anecdotes={anecdotes}/>
     </div>
   )
 }
